@@ -14,9 +14,9 @@ import br.com.condominio.domain.Condomino;
 @Repository
 public interface CondominoRepository extends JpaRepository<Condomino, Integer>{
 	
-	@Query("SELECT COUNT(1) AS existe FROM condomino c WHERE c.cpf = :cpf")
+	@Query("SELECT COUNT(1) AS existe FROM Condomino c WHERE c.cpf = :cpf")
 	public Long validateExistClientByCpf(@Param("cpf") String cpf);
 
-	@Query("SELECT c FROM Condominio c WHERE c.cpf = :cnpj")
+	@Query("SELECT c FROM Condomino c WHERE c.cpf = :cpf")
 	public Optional<Condomino> findByCpf(@Param("cpf") String cpf);
 }

@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -22,7 +22,8 @@ public class Condomino extends BaseDominio {
 	@Column(name="id_condomino")
 	private Integer id;
 	
-	@OneToMany
+	@NotNull
+	@ManyToOne
 	@JoinColumn(name = "id_condominio")
 	private Condominio condominio;
 	
@@ -39,8 +40,11 @@ public class Condomino extends BaseDominio {
 	@NotEmpty(message = "A identificação da unidade não pode ser vazia")
 	private String identifUnidade;
 
+	private Condomino() {
+		
+	}
 	public Condomino(Condominio condominio,String nome, String cpf, String identifUnidade) {
-
+		this.condominio = condominio;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.identifUnidade = identifUnidade;

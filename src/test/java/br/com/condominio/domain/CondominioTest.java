@@ -9,10 +9,10 @@ public class CondominioTest {
 	
 	@Test
 	public void deveCriarCadastroCondominio() {
-		Condominio bravo = new Condominio("Bravo", "20.980.987/0001-80","32640604");
+		Condominio bravo = new Condominio("Bravo", "13.383.247/0001-86","32640604");
 		
 		Assert.assertEquals("Bravo", bravo.getNome());
-		Assert.assertEquals("20.980.987/0001-80", bravo.getCnpj());
+		Assert.assertEquals("13.383.247/0001-86", bravo.getCnpj());
 		Assert.assertEquals("32640604", bravo.getContato());
 	}
 	@Test(expected = DominioInvalidoException.class)
