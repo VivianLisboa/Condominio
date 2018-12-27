@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity
 @Table(name = "condominio")
-public class Condominio extends BaseDominio{
+public class Condominio extends BaseDominio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_condominio")
@@ -33,7 +33,7 @@ public class Condominio extends BaseDominio{
 
 	private Condominio() {
 	}
-	
+
 	public Condominio(String nome, String cnpj, String contato) {
 		this.nome = nome;
 		this.cnpj = cnpj;
@@ -45,6 +45,7 @@ public class Condominio extends BaseDominio{
 		this(nome, cnpj, contato);
 		this.id = id;
 		this.endereco = endereco;
+
 	}
 
 	public Integer getId() {
@@ -91,7 +92,5 @@ public class Condominio extends BaseDominio{
 			return false;
 		return true;
 	}
-	
-	
 
 }
