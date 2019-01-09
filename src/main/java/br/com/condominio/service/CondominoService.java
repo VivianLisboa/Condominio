@@ -38,7 +38,14 @@ public class CondominoService {
 		condominoDTO.setId(condomino.getId());
 	}
 
-	public void update(Condomino condomino) {
+	public void update(CondominoDTO condominoDTO) {
+		Integer id = condominoDTO.getId();
+		Condominio condominio = condominoDTO.getCondominio();
+		String nome = condominoDTO.getNome();
+		String cpf = condominoDTO.getCpf();
+		String identificacaoUnidade = condominoDTO.getIdentificacaoUnidade();
+
+		Condomino condomino = new Condomino(id, condominio, nome, cpf, identificacaoUnidade);
 		this.condominoRepository.saveAndFlush(condomino);
 	}
 
@@ -62,8 +69,11 @@ public class CondominoService {
 		this.condominoRepository.deleteAll();
 	}
 
-	public void deletar(CondominoDTO fatima) {
-		this.condominoRepository.deleteById(fatima.getId());
+	public void deleteBycpf(String cpf) {
+		Optional<Condomino> condomino = condominoRepository.findByCpf(cpf);
+		if (condomino.isPresent()) {
+			condominoRepository.deleteById(condomino.get().getId());
+		}
 	}
 
 	public List<CondominoDTO> findAll() {

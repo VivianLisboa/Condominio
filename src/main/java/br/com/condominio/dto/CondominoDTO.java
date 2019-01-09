@@ -1,4 +1,4 @@
-package br.com.condominio.dto;
+ package br.com.condominio.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

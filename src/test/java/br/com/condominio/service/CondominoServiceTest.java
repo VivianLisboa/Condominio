@@ -40,37 +40,37 @@ public class CondominoServiceTest {
 	@Test
 	public void deveSalvarCondominoDTO() {
 
-		CondominoDTO condominoParaSalvar = new CondominoDTO();
-		condominoParaSalvar.setCondominio(vivaVida);
-		condominoParaSalvar.setNome("Fátima Rodrigues");
-		condominoParaSalvar.setCpf("014.958.510-10");
-		condominoParaSalvar.setIdentificacaoUnidade("casa 05");
+		CondominoDTO condominoDTO = new CondominoDTO();
+		condominoDTO.setCondominio(vivaVida);
+		condominoDTO.setNome("Fátima Rodrigues");
+		condominoDTO.setCpf("014.958.510-10");
+		condominoDTO.setIdentificacaoUnidade("casa 05");
 
-		condominoService.save(condominoParaSalvar);
-		Condomino condominoSalva = condominoService.findByCpf("014.958.510-10");
+		condominoService.save(condominoDTO);
+		Condomino condomino = condominoService.findByCpf("014.958.510-10");
 
-		Assert.assertEquals(vivaVida, condominoSalva.getCondominio());
-		Assert.assertEquals("Fátima Rodrigues", condominoSalva.getNome());
-		Assert.assertEquals("014.958.510-10", condominoSalva.getCpf());
-		Assert.assertEquals("casa 05", condominoSalva.getidentificacaoUnidade());
+		Assert.assertEquals(vivaVida, condomino.getCondominio());
+		Assert.assertEquals("Fátima Rodrigues", condomino.getNome());
+		Assert.assertEquals("014.958.510-10", condomino.getCpf());
+		Assert.assertEquals("casa 05", condomino.getidentificacaoUnidade());
 
 	}
 
 	@Test
 
 	public void deveFazerUpdateCondomino() {
-		CondominoDTO condominoParaSalvar = new CondominoDTO();
-		condominoParaSalvar.setCondominio(vivaVida);
-		condominoParaSalvar.setNome("Fátima Rodrigues");
-		condominoParaSalvar.setCpf("014.958.510-10");
-		condominoParaSalvar.setIdentificacaoUnidade("casa 05");
-		condominoService.save(condominoParaSalvar);
+		CondominoDTO condominoDTO = new CondominoDTO();
+		condominoDTO.setCondominio(vivaVida);
+		condominoDTO.setNome("Fátima Rodrigues");
+		condominoDTO.setCpf("014.958.510-10");
+		condominoDTO.setIdentificacaoUnidade("casa 05");
+		condominoService.save(condominoDTO);
 
 		Condomino fatimaSalvo = condominoService.findByCpf("014.958.510-10");
 
-		Condomino novoCondomino = new Condomino(fatimaSalvo.getId(), vivaVida, "Fátima Rodrigues", "014.958.510-10",
+		Condomino condomino = new Condomino(condominoDTO.getId(), vivaVida, "Fátima Rodrigues", "014.958.510-10",
 				"casa 16");
-		condominoService.update(novoCondomino);
+		condominoService.update(condominoDTO);
 
 		Condomino atualizado = condominoService.findByCpf("014.958.510-10");
 
@@ -84,8 +84,7 @@ public class CondominoServiceTest {
 		condominoParaSalvar.setCpf("014.958.510-10");
 		condominoParaSalvar.setIdentificacaoUnidade("casa 05");
 		condominoService.save(condominoParaSalvar);
-		condominoService.deletar(condominoParaSalvar);
-
+		condominoService.deleteBycpf(condominoParaSalvar.getCpf());
 	}
 
 	@Test(expected = ServiceException.class)

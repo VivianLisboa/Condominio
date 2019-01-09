@@ -54,6 +54,12 @@ public class CondominioService {
 		this.condominioRepository.deleteAll();
 	}
 
+	public void deleteBycnpj(String cnpj) {
+		Optional<Condominio> condominio = condominioRepository.findByCnpj(cnpj);
+		if(condominio.isPresent()) {
+			condominioRepository.deleteById(condominio.get().getId());
+		}
+	}
 	public List<CondominioDTO> findAll() {
 		List<CondominioDTO> condominioParaRetorno = new ArrayList<CondominioDTO>();
 		List<Condominio> condominios = condominioRepository.findAll();

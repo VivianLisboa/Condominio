@@ -1,30 +1,23 @@
-package br.com.condominio.domain;
+package br.com.condominio.dto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.condominio.domain.Condomino;
 
-@Entity
-@Table(name = "conta_receber_boleto")
-public class ContaReceber extends BaseDominio {
+public class ContaReceberDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_conta_receber_boleto")
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "id_condomino")
+	@NotNull
 	private Condomino condomino;
 
 	@NotNull
@@ -71,102 +64,120 @@ public class ContaReceber extends BaseDominio {
 	@NotEmpty
 	@Column(name = "nosso_numero")
 	private String nossoNumero;
-	
-	@Column(name = "total_Boleto")
+
+	@Transient
 	private Double totalBoleto;
-
-	private ContaReceber(){
-		
-	}
-
-	public ContaReceber(Condomino condomino, Double salaoFesta, Double diversos, Double devolucoes, Double consumoGas,
-			Double servicoPortaria, Double taxaCondominio, Double consumoAgua, Double energiaEletrica,
-			Double aguaCondominio, Double taxaExtra,String nossoNumero,Double totalBoleto) {
-
-		this.condomino = condomino;
-		this.salaoFesta = salaoFesta;
-		this.diversos = diversos;
-		this.devolucoes = devolucoes;
-		this.consumoGas = consumoGas;
-		this.servicoPortaria = servicoPortaria;
-		this.taxaCondominio = taxaCondominio;
-		this.consumoAgua = consumoAgua;
-		this.energiaEletrica = energiaEletrica;
-		this.aguaCondominio = aguaCondominio;
-		this.taxaExtra = taxaExtra;
-		this.nossoNumero = nossoNumero;
-		this.totalBoleto = totalBoleto;
-		validarDominio();
-	}
-
-	public ContaReceber(Integer id, Condomino condomino, Double salaoFesta, Double diversos, Double devolucoes,
-			Double consumoGas, Double servicoPortaria, Double taxaCondominio, Double consumoAgua,
-			Double energiaEletrica, Double aguaCondominio, Double taxaExtra,String nossoNumero, Double totalBoleto) {
-		this(condomino, salaoFesta, diversos, devolucoes, consumoGas, servicoPortaria, taxaCondominio, consumoAgua,
-				energiaEletrica, aguaCondominio, taxaExtra,nossoNumero,totalBoleto);
-		this.id = id;
-
-	}
-	
 
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Condomino getCondomino() {
 		return condomino;
 	}
 
+	public void setCondomino(Condomino condomino) {
+		this.condomino = condomino;
+	}
+
 	public Double getSalaoFesta() {
 		return salaoFesta;
+	}
+
+	public void setSalaoFesta(Double salaoFesta) {
+		this.salaoFesta = salaoFesta;
 	}
 
 	public Double getDiversos() {
 		return diversos;
 	}
 
+	public void setDiversos(Double diversos) {
+		this.diversos = diversos;
+	}
+
 	public Double getDevolucoes() {
 		return devolucoes;
+	}
+
+	public void setDevolucoes(Double devolucoes) {
+		this.devolucoes = devolucoes;
 	}
 
 	public Double getConsumoGas() {
 		return consumoGas;
 	}
 
+	public void setConsumoGas(Double consumoGas) {
+		this.consumoGas = consumoGas;
+	}
+
 	public Double getServicoPortaria() {
 		return servicoPortaria;
+	}
+
+	public void setServicoPortaria(Double servicoPortaria) {
+		this.servicoPortaria = servicoPortaria;
 	}
 
 	public Double getTaxaCondominio() {
 		return taxaCondominio;
 	}
 
+	public void setTaxaCondominio(Double taxaCondominio) {
+		this.taxaCondominio = taxaCondominio;
+	}
+
 	public Double getConsumoAgua() {
 		return consumoAgua;
+	}
+
+	public void setConsumoAgua(Double consumoAgua) {
+		this.consumoAgua = consumoAgua;
 	}
 
 	public Double getEnergiaEletrica() {
 		return energiaEletrica;
 	}
 
+	public void setEnergiaEletrica(Double energiaEletrica) {
+		this.energiaEletrica = energiaEletrica;
+	}
+
 	public Double getAguaCondominio() {
 		return aguaCondominio;
 	}
 
-	public String getNossoNumero() {
-		return nossoNumero;
+	public void setAguaCondominio(Double aguaCondominio) {
+		this.aguaCondominio = aguaCondominio;
 	}
-	
 
 	public Double getTaxaExtra() {
 		return taxaExtra;
 	}
 
+	public void setTaxaExtra(Double taxaExtra) {
+		this.taxaExtra = taxaExtra;
+	}
+
+	public String getNossoNumero() {
+		return nossoNumero;
+	}
+
+	public void setNossoNumero(String nossoNumero) {
+		this.nossoNumero = nossoNumero;
+	}
+
 	public Double getTotalBoleto() {
-		totalBoleto = salaoFesta+diversos+devolucoes+consumoGas+servicoPortaria +taxaCondominio+consumoAgua+energiaEletrica+aguaCondominio+taxaExtra;
 		return totalBoleto;
 	}
 
-	
+	public void setTotalBoleto(Double totalBoleto) {
+		this.totalBoleto = totalBoleto;
+	}
 
 }
