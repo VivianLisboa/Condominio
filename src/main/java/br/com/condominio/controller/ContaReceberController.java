@@ -47,9 +47,9 @@ import br.com.condominio.service.ContaReceberService;
 
 		}
 
-		@PutMapping(value = "/conta_receber_boleto")
+		@PutMapping(value = "/conta_receber_boleto/{identificacaoUnidade}")
 		public ResponseEntity<?> update(@RequestBody ContaReceberDTO contaReceberDTO) {
-			this.contaReceberService.save(contaReceberDTO);
+			this.contaReceberService.update(contaReceberDTO);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 

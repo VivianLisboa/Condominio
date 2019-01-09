@@ -44,9 +44,9 @@ public class CondominoController {
 
 	}
 
-	@PutMapping(value = "/condomino")
+	@PutMapping(value = "/condomino/{identicacaoUnidade}")
 	public ResponseEntity<?> update(@RequestBody CondominoDTO condominoDTO) {
-		this.condominoService.save(condominoDTO);
+		this.condominoService.update(condominoDTO);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
