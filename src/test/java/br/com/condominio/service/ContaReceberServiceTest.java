@@ -54,7 +54,7 @@ public class ContaReceberServiceTest {
 	public void deveSalvarContaReceberDTO() {
 		
 		ContaReceberDTO contaReceberDTO = new ContaReceberDTO();
-		contaReceberDTO.setCondomino(fatima);
+		contaReceberDTO.setCondomino("014.958.510-10");
 		contaReceberDTO.setSalaoFesta(new Double (50.00));
 		contaReceberDTO.setDiversos(new Double (0.00));
 		contaReceberDTO.setDevolucoes(new Double (0.00));
@@ -94,7 +94,7 @@ public class ContaReceberServiceTest {
 			public void deveFazerUpdateContaReceber() {
 	
 				ContaReceberDTO contaReceberDTO = new ContaReceberDTO();
-				contaReceberDTO.setCondomino(fatima);
+				contaReceberDTO.setCondomino("014.958.510-10");
 				contaReceberDTO.setSalaoFesta(new Double (50.00));
 				contaReceberDTO.setDiversos(new Double (0.00));
 				contaReceberDTO.setDevolucoes(new Double (0.00));
@@ -109,24 +109,27 @@ public class ContaReceberServiceTest {
 				contaReceberDTO.setTotalBoleto(new Double (569.00));
 				
 				contaReceberService.save(contaReceberDTO);
-		
-				ContaReceber casa05 = contaReceberService.findByIdentificacaoUnidade("casa 05");
-		
-				ContaReceber contaReceber = new ContaReceber(contaReceberDTO.getId(),fatima, new Double(50.00), new Double(0.00), new Double(0.00),
-						new Double(32.00), new Double(72.00), new Double(300.00), new Double(0.00), new Double(30.00),
-						new Double(20.00), new Double(0.00), "100105", new Double(504));
+								
 				
-				contaReceberService.update(contaReceberDTO);
+				ContaReceberDTO contaReceberSalvo = contaReceberService.findByIdentificacaoUnidade("casa 05");
+				contaReceberSalvo.setSalaoFesta(0.00);
+				contaReceberSalvo.setConsumoAgua(120.00);
+				contaReceberSalvo.setTaxaExtra(20.50);
+				Assert.assertEquals(new Double(0.00),contaReceberSalvo.getSalaoFesta());
+				Assert.assertEquals(new Double(120.00),contaReceberSalvo.getConsumoAgua());
+				Assert.assertEquals(new Double(20.50), contaReceberSalvo.getTaxaExtra());
+				
+				contaReceberService.update(contaReceberSalvo);
 		
 				ContaReceber atualizado = contaReceberService.findByIdentificacaoUnidade("casa 05");
-		
+				
 			}
 		
 			@Test
 			public void deveExcluirContaReceber() {
 				
 				ContaReceberDTO contaReceberParaSalvar = new ContaReceberDTO();
-				contaReceberParaSalvar.setCondomino(fatima);
+				contaReceberParaSalvar.setCondomino("014.958.510-10");
 				contaReceberParaSalvar.setSalaoFesta(new Double (50.00));
 				contaReceberParaSalvar.setDiversos(new Double (0.00));
 				contaReceberParaSalvar.setDevolucoes(new Double (0.00));
@@ -141,7 +144,7 @@ public class ContaReceberServiceTest {
 				contaReceberParaSalvar.setTotalBoleto(new Double (569.00));
 				
 				contaReceberService.save(contaReceberParaSalvar);
-				contaReceberService.findByIdentificacaoUnidade(contaReceberParaSalvar.getCondomino().getidentificacaoUnidade());
+				contaReceberService.findByIdentificacaoUnidade(contaReceberParaSalvar.getCondomino());
 		
 			}
 

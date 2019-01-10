@@ -12,7 +12,7 @@ public class CondominoDTO {
 	private Integer id;
 
 	@NotNull
-	private Condominio condominio;
+	private String condominio;
 
 	@NotNull(message = "Nome não pode ser nulo")
 	@NotEmpty(message = "Nome não pode ser vazio")
@@ -27,11 +27,11 @@ public class CondominoDTO {
 	@NotEmpty(message = "A identificação da unidade não pode ser vazia")
 	private String identificacaoUnidade;
 
-	public Condominio getCondominio() {
+	public String getCondominio() {
 		return condominio;
 	}
 
-	public void setCondominio(Condominio condominio) {
+	public void setCondominio(String condominio) {
 		this.condominio = condominio;
 	}
 

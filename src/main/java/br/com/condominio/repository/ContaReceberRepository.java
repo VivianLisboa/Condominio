@@ -8,10 +8,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.condominio.domain.ContaReceber;
+import br.com.condominio.dto.CondominoDTO;
 
 @Repository
 public interface ContaReceberRepository extends JpaRepository<ContaReceber, Integer> {
 
 	@Query("SELECT c FROM ContaReceber c WHERE c.condomino.identificacaoUnidade = :identificacaoUnidade")
 	public Optional<ContaReceber> findByIdentificacaoUnidade(@Param("identificacaoUnidade") String identificacaoUnidade);
+
+	
 }

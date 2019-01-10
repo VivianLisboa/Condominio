@@ -41,18 +41,18 @@ public class CondominoServiceTest {
 	public void deveSalvarCondominoDTO() {
 
 		CondominoDTO condominoDTO = new CondominoDTO();
-		condominoDTO.setCondominio(vivaVida);
+		condominoDTO.setCondominio("13.383.247/0001-86");
 		condominoDTO.setNome("Fátima Rodrigues");
 		condominoDTO.setCpf("014.958.510-10");
 		condominoDTO.setIdentificacaoUnidade("casa 05");
 
 		condominoService.save(condominoDTO);
-		Condomino condomino = condominoService.findByCpf("014.958.510-10");
+		CondominoDTO condomino = condominoService.findByCpf("014.958.510-10");
 
 		Assert.assertEquals(vivaVida, condomino.getCondominio());
 		Assert.assertEquals("Fátima Rodrigues", condomino.getNome());
 		Assert.assertEquals("014.958.510-10", condomino.getCpf());
-		Assert.assertEquals("casa 05", condomino.getidentificacaoUnidade());
+		Assert.assertEquals("casa 05", condomino.getIdentificacaoUnidade());
 
 	}
 
@@ -60,26 +60,24 @@ public class CondominoServiceTest {
 
 	public void deveFazerUpdateCondomino() {
 		CondominoDTO condominoDTO = new CondominoDTO();
-		condominoDTO.setCondominio(vivaVida);
+		condominoDTO.setCondominio("13.383.247/0001-86");
 		condominoDTO.setNome("Fátima Rodrigues");
 		condominoDTO.setCpf("014.958.510-10");
 		condominoDTO.setIdentificacaoUnidade("casa 05");
 		condominoService.save(condominoDTO);
 
-		Condomino fatimaSalvo = condominoService.findByCpf("014.958.510-10");
+		CondominoDTO fatimaSalvo = condominoService.findByCpf("014.958.510-10");
+		fatimaSalvo.setIdentificacaoUnidade("casa 16");
+		condominoService.update(fatimaSalvo);
 
-		Condomino condomino = new Condomino(condominoDTO.getId(), vivaVida, "Fátima Rodrigues", "014.958.510-10",
-				"casa 16");
-		condominoService.update(condominoDTO);
-
-		Condomino atualizado = condominoService.findByCpf("014.958.510-10");
-
+		CondominoDTO atualizado = condominoService.findByCpf("014.958.510-10");
+		Assert.assertEquals("casa 16", atualizado.getIdentificacaoUnidade());
 	}
-
+	
 	@Test
 	public void deveExcluirCondomino() {
 		CondominoDTO condominoParaSalvar = new CondominoDTO();
-		condominoParaSalvar.setCondominio(vivaVida);
+		condominoParaSalvar.setCondominio("13.383.247/0001-86");
 		condominoParaSalvar.setNome("Fátima Rodrigues");
 		condominoParaSalvar.setCpf("014.958.510-10");
 		condominoParaSalvar.setIdentificacaoUnidade("casa 05");
@@ -90,7 +88,7 @@ public class CondominoServiceTest {
 	@Test(expected = ServiceException.class)
 	public void deveValidarCondominoJaCadastradoPeloCpf() {
 		CondominoDTO condominoParaSalvar = new CondominoDTO();
-		condominoParaSalvar.setCondominio(vivaVida);
+		condominoParaSalvar.setCondominio("13.383.247/0001-86");
 		condominoParaSalvar.setNome("Fátima Rodrigues");
 		condominoParaSalvar.setCpf("014.958.510-10");
 		condominoParaSalvar.setIdentificacaoUnidade("casa 05");

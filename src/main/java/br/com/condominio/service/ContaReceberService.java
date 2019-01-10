@@ -8,10 +8,12 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.condominio.domain.Condominio;
 import br.com.condominio.domain.Condomino;
 import br.com.condominio.domain.ContaReceber;
 import br.com.condominio.dto.CondominoDTO;
 import br.com.condominio.dto.ContaReceberDTO;
+import br.com.condominio.repository.CondominioRepository;
 import br.com.condominio.repository.CondominoRepository;
 import br.com.condominio.repository.ContaReceberRepository;
 
@@ -19,14 +21,18 @@ import br.com.condominio.repository.ContaReceberRepository;
 public class ContaReceberService {
 
 	private ContaReceberRepository contaReceberRepository;
+	private CondominoRepository condominoRepository;
 
 	@Autowired
-	public ContaReceberService(ContaReceberRepository contaReceberRepository) {
+	public ContaReceberService(CondominoRepository condominoRepository, ContaReceberRepository contaReceberRepository) {
 		this.contaReceberRepository = contaReceberRepository;
+		this.condominoRepository = condominoRepository;
 	}
 
 	public void save(ContaReceberDTO contaReceberDTO) {
-		Condomino condomino = contaReceberDTO.getCondomino();
+		Optional<Condomino> condomino = condominoRepository.findByCpf(contaReceberDTO.getCondomino());
+		contaReceberRepository.findByIdentificacaoUnidade(contaReceberDTO.getCondomino());
+				
 		Double salaoFesta = contaReceberDTO.getSalaoFesta();
 		Double diversos = contaReceberDTO.getDiversos();
 		Double devolucoes = contaReceberDTO.getDevolucoes();
@@ -40,7 +46,7 @@ public class ContaReceberService {
 		String nossoNumero = contaReceberDTO.getNossoNumero();
 		Double totalBoleto = contaReceberDTO.getTotalBoleto();
 
-		ContaReceber contaReceber = new ContaReceber(condomino, salaoFesta, diversos, devolucoes, consumoGas,
+		ContaReceber contaReceber = new ContaReceber(condomino.get(), salaoFesta, diversos, devolucoes, consumoGas,
 				servicoPortaria, taxaCondominio, consumoAgua, energiaEletrica, aguaCondominio, taxaExtra, nossoNumero,
 				totalBoleto);
 		this.contaReceberRepository.saveAndFlush(contaReceber);
@@ -48,8 +54,9 @@ public class ContaReceberService {
 	}
 
 	public void update(ContaReceberDTO contaReceberDTO) {
+		Optional<Condomino> condomino = condominoRepository.findByCpf(contaReceberDTO.getCondomino());
+		contaReceberRepository.findByIdentificacaoUnidade(contaReceberDTO.getCondomino());
 		Integer id = contaReceberDTO.getId();
-		Condomino condomino = contaReceberDTO.getCondomino();
 		Double salaoFesta = contaReceberDTO.getSalaoFesta();
 		Double diversos = contaReceberDTO.getDiversos();
 		Double devolucoes = contaReceberDTO.getDevolucoes();
@@ -63,7 +70,7 @@ public class ContaReceberService {
 		String nossoNumero = contaReceberDTO.getNossoNumero();
 		Double totalBoleto = contaReceberDTO.getTotalBoleto();
 
-		ContaReceber contaReceber = new ContaReceber(id, condomino, salaoFesta, diversos, devolucoes, consumoGas,
+		ContaReceber contaReceber = new ContaReceber(id, condomino.get(), salaoFesta, diversos, devolucoes, consumoGas,
 				servicoPortaria, taxaCondominio, consumoAgua, energiaEletrica, aguaCondominio, taxaExtra, nossoNumero,
 				totalBoleto);
 		this.contaReceberRepository.saveAndFlush(contaReceber);
@@ -89,7 +96,7 @@ public class ContaReceberService {
 
 		for (ContaReceber contaReceber : contasReceber) {
 			ContaReceberDTO contaReceberDTO = new ContaReceberDTO();
-			contaReceberDTO.setCondomino(contaReceber.getCondomino());
+			contaReceberDTO.setCondomino(contaReceber.getCondomino().getCpf());
 			contaReceberDTO.setSalaoFesta(contaReceber.getSalaoFesta());
 			contaReceberDTO.setDiversos(contaReceber.getDiversos());
 			contaReceberDTO.setDevolucoes(contaReceber.getDevolucoes());

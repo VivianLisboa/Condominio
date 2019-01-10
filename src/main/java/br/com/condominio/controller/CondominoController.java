@@ -21,7 +21,7 @@ import br.com.condominio.dto.CondominoDTO;
 import br.com.condominio.service.CondominoService;
 
 @RestController
-@RequestMapping(value = "condomino")
+@RequestMapping(value = "vivi")
 public class CondominoController {
 
 	public CondominoService condominoService;

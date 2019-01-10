@@ -12,7 +12,7 @@ import br.com.condominio.domain.Condominio;
 import br.com.condominio.domain.Condomino;
 
 import br.com.condominio.dto.CondominoDTO;
-
+import br.com.condominio.repository.CondominioRepository;
 import br.com.condominio.repository.CondominoRepository;
 
 @Service
@@ -20,32 +20,34 @@ public class CondominoService {
 
 	private CondominoRepository condominoRepository;
 
+	private CondominioRepository condominioRepository;
+	
 	@Autowired
-	public CondominoService(CondominoRepository condominoRepository) {
+	public CondominoService(CondominoRepository condominoRepository, CondominioRepository condominioRepository) {
 		this.condominoRepository = condominoRepository;
-
+		this.condominioRepository = condominioRepository;
 	}
 
 	public void save(CondominoDTO condominoDTO) {
-		Condominio condominio = condominoDTO.getCondominio();
+		Optional<Condominio> condominio = condominioRepository.findByCnpj(condominoDTO.getCondominio());
 		String nome = condominoDTO.getNome();
 		String cpf = condominoDTO.getCpf();
 		String identificacaoUnidade = condominoDTO.getIdentificacaoUnidade();
 
-		Condomino condomino = new Condomino(condominio, nome, cpf, identificacaoUnidade);
+		Condomino condomino = new Condomino(condominio.get(), nome, cpf, identificacaoUnidade);
 		validarInsertCondomino(condomino);
 		this.condominoRepository.saveAndFlush(condomino);
 		condominoDTO.setId(condomino.getId());
 	}
 
 	public void update(CondominoDTO condominoDTO) {
+		Optional<Condominio> condominio = condominioRepository.findByCnpj(condominoDTO.getCondominio());
 		Integer id = condominoDTO.getId();
-		Condominio condominio = condominoDTO.getCondominio();
 		String nome = condominoDTO.getNome();
 		String cpf = condominoDTO.getCpf();
 		String identificacaoUnidade = condominoDTO.getIdentificacaoUnidade();
 
-		Condomino condomino = new Condomino(id, condominio, nome, cpf, identificacaoUnidade);
+		Condomino condomino = new Condomino(id, condominio.get(), nome, cpf, identificacaoUnidade);
 		this.condominoRepository.saveAndFlush(condomino);
 	}
 
@@ -57,10 +59,17 @@ public class CondominoService {
 		}
 	}
 
-	public Condomino findByCpf(String cpf) {
+	public CondominoDTO findByCpf(String cpf) {
 		Optional<Condomino> condominoEncontrado = condominoRepository.findByCpf(cpf);
 		if (condominoEncontrado.isPresent()) {
-			return condominoEncontrado.get();
+			Condomino condomino = condominoEncontrado.get();
+			CondominoDTO condominoDTO = new CondominoDTO();
+			condominoDTO.setId(condomino.getId());
+			condominoDTO.setCondominio(condomino.getCondominio().getCnpj());
+			condominoDTO.setNome(condomino.getNome());
+			condominoDTO.setCpf(condomino.getCpf());
+			condominoDTO.setIdentificacaoUnidade(condomino.getidentificacaoUnidade());
+			return condominoDTO;
 		}
 		throw new ServiceException("Condomino não encontrado");
 	}
@@ -82,7 +91,8 @@ public class CondominoService {
 
 		for (Condomino condomino : condominos) {
 			CondominoDTO condominoDTO = new CondominoDTO();
-			condominoDTO.setCondominio(condomino.getCondominio());
+			condominoDTO.setId(condomino.getId());
+			condominoDTO.setCondominio(condomino.getCondominio().getCnpj());
 			condominoDTO.setNome(condomino.getNome());
 			condominoDTO.setCpf(condomino.getCpf());
 			condominoDTO.setIdentificacaoUnidade(condomino.getidentificacaoUnidade());
