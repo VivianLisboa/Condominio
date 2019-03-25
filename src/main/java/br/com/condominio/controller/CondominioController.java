@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.condominio.dto.CondominioDTO;
+import br.com.condominio.metricas.EnumSingleton;
 import br.com.condominio.service.CondominioService;
 
 @RestController
@@ -31,6 +32,7 @@ public class CondominioController {
 
 	@GetMapping(value = "/condominio")
 	public ResponseEntity<List<CondominioDTO>> obterCondominio() {
+		EnumSingleton.INSTANCE.inc();
 		List<CondominioDTO> condominios = condominioService.findAll();
 		return new ResponseEntity<List<CondominioDTO>>(condominios, HttpStatus.OK);
 	}
